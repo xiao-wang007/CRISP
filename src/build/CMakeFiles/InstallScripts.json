@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/xiao/0_codes/CRISP/src/build/cmake_install.cmake",
+		"/Users/xiao/0_codes/CRISP/src/build/core/cmake_install.cmake",
+		"/Users/xiao/0_codes/CRISP/src/build/examples/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

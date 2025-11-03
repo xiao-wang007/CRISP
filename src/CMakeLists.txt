@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 # MATLAB root directory
 # set(MATLAB_ROOT "/usr/local/MATLAB/R2024a") # Replace with your MATLAB installation path
-# Add PKG_CONFIG_PATH
-set(ENV{PKG_CONFIG_PATH} "/usr/local/share/pkgconfig:$ENV{PKG_CONFIG_PATH}")
+# Use only Homebrew for pkg-config (prioritize it over /usr/local)
+set(ENV{PKG_CONFIG_PATH} "/opt/homebrew/lib/pkgconfig:/opt/homebrew/share/pkgconfig")
 
 # Find packages
 find_package(PkgConfig REQUIRED)
@@ -15,13 +15,24 @@ find_package(PkgConfig REQUIRED)
 # CPPADCG is header file only, if you install it default, you don't need to find it explicitly
 pkg_check_modules(CPPAD REQUIRED cppad)
 find_package(Eigen3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS
-system
-filesystem
-log_setup
-log)
+
+# Boost 1.89.0 on macOS doesn't provide component config files, so we manually set the paths
+set(Boost_INCLUDE_DIRS "/opt/homebrew/include")
+set(Boost_LIBRARY_DIRS "/opt/homebrew/lib")
+set(Boost_LIBRARIES "/opt/homebrew/lib/libboost_filesystem.dylib")
+set(Boost_FOUND TRUE)
+
 find_package(yaml-cpp REQUIRED) # Yaml for reading the hyper-parameters for the solver
 find_package(piqp REQUIRED) # piqp is header only
+
+# Add library directories for linking (Homebrew for most deps, /usr/local for manually installed PIQP)
+link_directories(/opt/homebrew/lib /usr/local/lib)
+
+# Set RPATH so executables can find shared libraries at runtime
+# Note: PIQP is in /usr/local/lib, other deps in /opt/homebrew/lib
+set(CMAKE_INSTALL_RPATH "/opt/homebrew/lib;/usr/local/lib")
+set(CMAKE_BUILD_RPATH "/opt/homebrew/lib;/usr/local/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(PYBIND11_FINDPYTHON ON)
 find_package(pybind11 CONFIG REQUIRED)
