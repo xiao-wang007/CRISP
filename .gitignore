@@ -1,0 +1,5 @@
+# Ignore any directory named "build" at any depth
+build/
+
+# (Optional) If you only want to ignore a top-level build dir, use this instead:
+# /build/
