@@ -138,9 +138,11 @@ void CppAdInterface::initializeModel() {
             case ModelInfoLevel::FIRST_ORDER:
                 cgen.setCreateSparseJacobian(true);
                 {
-                    CppAD::sparse_rc<SizeVector> eye_sparsity(variableDim_ + parameterDim_, variableDim_ + parameterDim_, variableDim_ + parameterDim_);
+                    CppAD::sparse_rc<SizeVector> eye_sparsity(variableDim_ + parameterDim_, 
+                                                              variableDim_ + parameterDim_, 
+                                                              variableDim_ + parameterDim_);
                     for (size_t k = 0; k < variableDim_ + parameterDim_; ++k)
-                        eye_sparsity.set(k, k, k);
+                        eye_sparsity.set(k, k, k); // 3rd k is index in the sparse matrix storage
                     bool transpose = false;
                     bool dependency = false;
                     bool internal_bool = false;

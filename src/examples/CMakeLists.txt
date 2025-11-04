@@ -34,3 +34,9 @@ add_executable(pushT_example pushT/SolvePushT.cpp)
 target_link_libraries(pushT_example
   CRISP
 )
+
+add_executable(my_take_example1 my_take/cpp/example1.cpp)
+
+target_link_libraries(my_take_example1
+  CRISP
+)
