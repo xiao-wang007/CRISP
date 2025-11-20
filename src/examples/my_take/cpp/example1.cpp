@@ -61,7 +61,8 @@ int main() {
     std::cout << "Creating ObjectiveFunction for simple objective function... \n" 
               << std::endl;
     // turning the function into an ObjectiveFunction object
-    // auto obj = std::make_shared<ObjectiveFunction>(variableNum, num_state, problemName, folderName, "pushbotObjective", pushbotObjective);
+    // auto obj = std::make_shared<ObjectiveFunction>(variableNum, num_state, problemName, 
+    //                              folderName, "pushbotObjective", pushbotObjective);
     std::shared_ptr<ObjectiveFunction> obj1 = std::make_shared<ObjectiveFunction>(
         variableDim,
         modelName,
